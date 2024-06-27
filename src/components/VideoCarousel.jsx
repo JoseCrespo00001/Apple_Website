@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react"
 import {hightlightsSlides} from "../constants"
 import { pauseImg, playImg, replayImg } from "../utils";
 import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
+import { gsap } from "gsap";
 
 const VideoCarousel = () => {
     const videoRef =useRef([]);
@@ -50,16 +50,17 @@ const VideoCarousel = () => {
     },[videoId, startPlay])
 
 
-    const handleProcess = (type, i ) = {
+    const handleProcess = (type, i ) => {
         switch(type) {
             case 'video-end':
                 setVideo((pre) => ({...pre, isEnd: true, videoId: i + 1}))
                 break;
             case 'video-last': setVideo((pre) => ({...pre, isLastVideo: true }))
                 break;
-            case 'video-last': setVideo((pre) => ({...pre, isLastVideo: true }))
+            case 'video-reset': setVideo((pre) => ({...pre, isLastVideo: false, videoId:0 }))
                 break;
-
+            case 'play': setVideo((pre) => ({...pre, isPlaying: false, videoId:0 }))
+                break;
 
 
             default:
