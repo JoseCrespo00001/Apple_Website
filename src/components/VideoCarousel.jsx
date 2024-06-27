@@ -59,12 +59,12 @@ const VideoCarousel = () => {
                 break;
             case 'video-reset': setVideo((pre) => ({...pre, isLastVideo: false, videoId:0 }))
                 break;
-            case 'play': setVideo((pre) => ({...pre, isPlaying: false, videoId:0 }))
+            case 'play': setVideo((pre) => ({...pre, isPlaying: !pre.isPlaying }))
                 break;
 
 
             default:
-                break;
+                return video;
         }
     }
 
