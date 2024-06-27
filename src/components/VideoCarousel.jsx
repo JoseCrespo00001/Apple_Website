@@ -4,7 +4,6 @@ import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
 gsap.registerPlugin(ScrollTrigger);
 import { useEffect, useRef, useState } from "react";
-
 import { hightlightsSlides } from "../constants";
 import { pauseImg, playImg, replayImg } from "../utils";
 
@@ -30,7 +29,7 @@ const VideoCarousel = () => {
     gsap.to("#slider", {
       transform: `translateX(${-100 * videoId}%)`,
       duration: 2,
-      ease: "power2.inOut", // show visualizer https://gsap.com/docs/v3/Eases
+      ease: "power2.inOut", // show visualizer 
     });
 
     // video animation to play the video when it is in the view
@@ -114,7 +113,7 @@ const VideoCarousel = () => {
         gsap.ticker.remove(animUpdate);
       }
     }
-  }, [videoId, startPlay]);
+  }, [videoId, startPlay, isPlaying]);
 
   useEffect(() => {
     if (loadedData.length > 3) {
