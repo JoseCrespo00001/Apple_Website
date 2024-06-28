@@ -12,7 +12,7 @@ const VideoCarousel = () => {
   const videoSpanRef = useRef([]);
   const videoDivRef = useRef([]);
 
-  // video and indicator
+  // Estado inicial del video y el indicador
   const [video, setVideo] = useState({
     isEnd: false,
     startPlay: false,
@@ -25,14 +25,14 @@ const VideoCarousel = () => {
   const { isEnd, isLastVideo, startPlay, videoId, isPlaying } = video;
 
   useGSAP(() => {
-    // slider animation to move the video out of the screen and bring the next video in
+    // Animación del slider para mover el video fuera de la pantalla y traer el siguiente
     gsap.to("#slider", {
       transform: `translateX(${-100 * videoId}%)`,
       duration: 2,
-      ease: "power2.inOut", // show visualizer 
+      ease: "power2.inOut",
     });
 
-    // video animation to play the video when it is in the view
+    // Animación del video para reproducirlo cuando está en vista
     gsap.to("#video", {
       scrollTrigger: {
         trigger: "#video",
@@ -53,26 +53,26 @@ const VideoCarousel = () => {
     let span = videoSpanRef.current;
 
     if (span[videoId]) {
-      // animation to move the indicator
+      // Animación para mover el indicador
       let anim = gsap.to(span[videoId], {
         onUpdate: () => {
-          // get the progress of the video
+          // Obtener el progreso del video
           const progress = Math.ceil(anim.progress() * 100);
 
           if (progress != currentProgress) {
             currentProgress = progress;
 
-            // set the width of the progress bar
+            // Establecer el ancho de la barra de progreso
             gsap.to(videoDivRef.current[videoId], {
               width:
                 window.innerWidth < 760
-                  ? "10vw" // mobile
+                  ? "10vw" // móvil
                   : window.innerWidth < 1200
-                  ? "10vw" // tablet
-                  : "4vw", // laptop
+                  ? "10vw" // tableta
+                  : "4vw", // portátil
             });
 
-            // set the background color of the progress bar
+            // Establecer el color de fondo de la barra de progreso
             gsap.to(span[videoId], {
               width: `${currentProgress}%`,
               backgroundColor: "white",
@@ -80,7 +80,7 @@ const VideoCarousel = () => {
           }
         },
 
-        // when the video is ended, replace the progress bar with the indicator and change the background color
+        // Al finalizar el video, reemplazar la barra de progreso con el indicador y cambiar el color de fondo
         onComplete: () => {
           if (isPlaying) {
             gsap.to(videoDivRef.current[videoId], {
@@ -97,7 +97,7 @@ const VideoCarousel = () => {
         anim.restart();
       }
 
-      // update the progress bar
+      // Actualizar la barra de progreso
       const animUpdate = () => {
         anim.progress(
           videoRef.current[videoId].currentTime /
@@ -106,10 +106,10 @@ const VideoCarousel = () => {
       };
 
       if (isPlaying) {
-        // ticker to update the progress bar
+        // Ticker para actualizar la barra de progreso
         gsap.ticker.add(animUpdate);
       } else {
-        // remove the ticker when the video is paused (progress bar is stopped)
+        // Remover el ticker cuando el video está pausado
         gsap.ticker.remove(animUpdate);
       }
     }
@@ -125,7 +125,7 @@ const VideoCarousel = () => {
     }
   }, [startPlay, videoId, isPlaying, loadedData]);
 
-  // vd id is the id for every video until id becomes number 3
+  // Manejo de eventos del video
   const handleProcess = (type, i) => {
     switch (type) {
       case "video-end":
@@ -154,7 +154,6 @@ const VideoCarousel = () => {
   };
 
   const handleLoadedMetaData = (i, e) => setLoadedData((pre) => [...pre, e]);
-
   return (
     <>
       <div className="flex items-center">

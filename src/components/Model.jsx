@@ -1,38 +1,54 @@
-import { useGSAP } from '@gsap/react'
-import {gsap} from 'gsap'
-import ModelView from './ModelView'
-import { useRef, useState } from 'react'
-import {yellowImg} from '../utils';
-import * as THREE from 'three';
-import { Canvas } from "@react-three/fiber";
-import { View } from "@react-three/drei";
-import { models, sizes } from '../constants';
-
+import { useGSAP } from '@gsap/react' // Importa el hook useGSAP de GSAP para React
+import {gsap} from 'gsap' // Importa la librería gsap
+import ModelView from './ModelView' // Importa el componente ModelView
+import { useRef, useState, useEffect } from 'react' // Importa useRef y useState de React
+import {yellowImg} from '../utils'; // Importa yellowImg desde utils
+import * as THREE from 'three'; // Importa todo de la librería THREE
+import { Canvas } from "@react-three/fiber"; // Importa Canvas de react-three/fiber
+import { View } from "@react-three/drei"; // Importa View de react-three/drei
+import { models, sizes } from '../constants'; // Importa models y sizes desde constants
+import { animateWithGsapTimeline } from "../utils/animations"; //Importa modulo de animacion
 
 const Model = () => {
 
-    const [size,setSize] = useState('small');
-    const [model, setModel] = useState({
+    const [size,setSize] = useState('small'); // Estado para controlar el tamaño del modelo
+    const [model, setModel] = useState({ // Estado para controlar el modelo actual
         title: 'iPhone 15 Pro in Natural Titanium',
         color:['#8F8A81', '#FFE7B9', '#6F6C64'],
         img: yellowImg,
     })
 
-    //camera contol
-    const cameraControlSmall = useRef(null);
-    const cameraControlLarge = useRef(null);
+    // Control de cámara
+    const cameraControlSmall = useRef(null); // Referencia para el control de la cámara pequeña
+    const cameraControlLarge = useRef(null); // Referencia para el control de la cámara grande
 
-    //first time with THREE
-    // model
-    const small = useRef(new THREE.Group());
-    const large = useRef(new THREE.Group());
+    // Primer uso de THREE
+    const small = useRef(new THREE.Group()); // Grupo pequeño para THREE
+    const large = useRef(new THREE.Group()); // Grupo grande para THREE
 
-    // rotation 
-    const [smallRotation, setSmallRotation] = useState(0);
-    const [largeRotation, setLargeRotation] = useState(0);
+    // Rotación
+    const [smallRotation, setSmallRotation] = useState(0); // Estado para la rotación del grupo pequeño
+    const [largeRotation, setLargeRotation] = useState(0); // Estado para la rotación del grupo grande
 
+    const tl = gsap.timeline();
 
-    useGSAP(() => {
+    useEffect(() => {
+        if(size === 'large') {
+          animateWithGsapTimeline(tl, small, smallRotation, '#view1', '#view2', {
+            transform: 'translateX(-100%)',
+            duration: 2
+          })
+        }
+    
+        if(size ==='small') {
+          animateWithGsapTimeline(tl, large, largeRotation, '#view2', '#view1', {
+            transform: 'translateX(0)',
+            duration: 2
+          })
+        }
+      }, [size])
+
+    useGSAP(() => { // Uso de GSAP para animaciones
         gsap.to("#heading", {
             y:0,
             opacity:1

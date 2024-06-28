@@ -1,3 +1,11 @@
+// 1. Importar las librerías necesarias para la animación y manejo de estado.
+// 2. Definir el componente Hero que maneja el video y animaciones de la sección principal.
+// 3. Inicializar el estado para la fuente del video, seleccionando entre dos opciones basadas en el ancho de la ventana.
+// 4. Crear una función para actualizar la fuente del video cuando cambie el tamaño de la ventana.
+// 5. Añadir un efecto para escuchar el cambio de tamaño de la ventana y actualizar la fuente del video.
+// 6. Utilizar GSAP para animar la opacidad y posición de los elementos del hero y el CTA después de un retraso.
+// 7. Renderizar el componente, mostrando un video y un botón de compra con información de precios.
+
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { heroVideo, smallHeroVideo } from "../utils";

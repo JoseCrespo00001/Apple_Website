@@ -1,17 +1,18 @@
-import { useGSAP } from "@gsap/react"
-import { gsap } from "gsap"
-import { rightImg, watchImg } from "../utils"
-import VideoCarousel from "./VideoCarousel"
+import { useGSAP } from "@gsap/react" // Importa el hook useGSAP de la librería GSAP para React
+import { gsap } from "gsap" // Importa gsap de la librería GSAP
+import { rightImg, watchImg } from "../utils" // Importa imágenes desde utilidades
+import VideoCarousel from "./VideoCarousel" // Importa el componente VideoCarousel
 
-
-
-
+// Define el componente Highlights
 const Highlights = () => {
+  // Utiliza el hook useGSAP para animaciones
   useGSAP(() =>{
+    // Anima el título para que sea visible y se mueva a su posición original
     gsap.to('#title' , {
       opacity:1,
       y:0
     }),
+    // Anima los enlaces para que sean visibles, se muevan a su posición original y se animen con un retraso escalonado
     gsap.to('.link' , {
       opacity:1,
       y:0,
@@ -21,6 +22,7 @@ const Highlights = () => {
 
   },[])
 
+  // Renderiza el componente
   return (
     <section id="highlights" className="w-screen overflow-hidden h-full common-padding bg-zinc">
       <div className="screen-max-width">
@@ -39,4 +41,3 @@ const Highlights = () => {
 }
 
 export default Highlights
-
